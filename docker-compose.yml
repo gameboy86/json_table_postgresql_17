@@ -1,0 +1,13 @@
+services:
+  db1:
+    image: postgres:17.0
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: dbpassword
+    ports:
+      - "5432:5432"
+    command: postgres -c 'max_connections=1000'
+    volumes:
+      - ./postgres-init/01-create_role.sh:/docker-entrypoint-initdb.d/01-create_role.sh
+      - ./postgres-init/02-create_table_schema_and_insert.sh:/docker-entrypoint-initdb.d/02-create_table_schema_and_insert.sh
